@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { CheckBox, View, Text, TextInput, StyleSheet } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import HgaLogo from "../Components/HgaLogo";
 import { HgaGlobalColors } from "../Util/HgaGlobalColors";
 import HgaButton from "../Components/HgaButton";
 import HgaLink from "../Components/HgaLinks";
 import { LoginText } from "../Util/HgaContentEn";
+import { Checkbox } from "react-native-paper";
+import HgaSelect from "../Components/HgaSelect";
 function HgaLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -34,12 +36,13 @@ function HgaLogin() {
             value={password}
           />
           <View style={loginStyle.checkboxContainer}>
-            <CheckBox
-              value={isSelected}
-              onValueChange={setSelection}
-              style={loginStyle.checkbox}
+            <Checkbox
+              status={isSelected ? "checked" : "unchecked"}
+              onPress={() => {
+                setSelection(!isSelected);
+              }}
             />
-            <Text style={loginStyle.label}>Remember me</Text>
+            <Text style={loginStyle.label}>Remember Me</Text>
           </View>
 
           <HgaButton
@@ -58,6 +61,7 @@ function HgaLogin() {
         <Text style={loginStyle.slogn}>
           "HostelHub: Your Gateway to Hassle-Free Stays!"
         </Text>
+        
       </View>
     </View>
   );

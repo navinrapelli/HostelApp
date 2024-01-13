@@ -10,8 +10,8 @@ function HgaRadioButton() {
         value={checked}
       >
         <View>
-          <RadioButton.Item value="first" label="First" />
-          <RadioButton.Item label="Second" value="second" />
+          <RadioButton.Item position="leading" value="first" label="First" />
+          <RadioButton.Item position="leading" value="second" label="Second" />
         </View>
       </RadioButton.Group>
     </View>

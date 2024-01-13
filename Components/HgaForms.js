@@ -1,6 +1,8 @@
 import { Text, View, StyleSheet, TextInput, CheckBox } from "react-native";
 import { useState } from "react";
 import HgaRadioButton from "./HgaRadioButton";
+import { Checkbox } from "react-native-paper";
+import HgaSelect from "./HgaSelect";
 function HgaForms() {
   const [inputText, setInputText] = useState("");
   const [isSelected, setSelection] = useState(false);
@@ -14,15 +16,18 @@ function HgaForms() {
       />
 
       <View style={HgaFormsStyle.checkboxContainer}>
-        <CheckBox
-          value={isSelected}
-          onValueChange={setSelection}
-          style={HgaFormsStyle.checkbox}
+        <Checkbox
+          status={isSelected ? "checked" : "unchecked"}
+          onPress={() => {
+            setSelection(!isSelected);
+          }}
         />
         <Text style={HgaFormsStyle.label}>Remember me</Text>
       </View>
 
       <HgaRadioButton />
+
+      <HgaSelect />
     </View>
   );
 }
@@ -37,8 +42,6 @@ const HgaFormsStyle = StyleSheet.create({
     justifyContent: "space-evenly",
   },
   input: {
-    width: "100%",
-    height: "100%",
     borderColor: "gray",
     borderWidth: 1,
     borderRadius: 10,
