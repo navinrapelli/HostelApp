@@ -1,0 +1,18 @@
+export const HgaGlobalColors = {
+  mainBg: "#F8F4EC",
+  mainBGDarK: "#FFE7C1",
+  Red: "#FF0000",
+  Green: "#00FF00",
+  Blue: "#0000FF",
+  SkyeBlue: "#02CCFE",
+  Yellow: "#FFFF00",
+  Orange: "#FFA500",
+  lightOrange: "#FFD580",
+  Purple: "#800080",
+  Pink: "#FFC0CB",
+  Brown: "#A52A2A",
+  Cyan: "#00FFFF",
+  Magenta: "#FF00FF",
+  Black: "#000000",
+  White: "#FFFFFF",
+};
