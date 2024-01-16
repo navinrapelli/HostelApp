@@ -10,11 +10,11 @@ function HgaButton({ color, name, onPress, fill }) {
   const buttonStyleee = [ButtonStyle.main];
   fill ? buttonStyleee.push({ backgroundColor: color }) : "";
   return (
-    <TouchableOpacity onPress={onPress}>
+    <Pressable onPress={onPress}>
       <View style={buttonStyleee}>
         <Text style={ButtonStyle.text}>{name}</Text>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 
