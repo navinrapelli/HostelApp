@@ -1,20 +1,23 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { View, Text, TextInput, StyleSheet, Button } from "react-native";
 import HgaLogo from "../Components/HgaLogo";
 import { HgaGlobalColors } from "../Util/HgaGlobalColors";
 import HgaButton from "../Components/HgaButton";
 import HgaLink from "../Components/HgaLinks";
 import { LoginText } from "../Util/HgaContentEn";
 import { Checkbox } from "react-native-paper";
+import { useEffect } from "react";
 import HgaSelect from "../Components/HgaSelect";
+import { useToast } from "react-native-toast-notifications";
 function HgaLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isSelected, setSelection] = useState(false);
+  const toast = useToast();
 
-  function handleLogin() {
-    console.log("Login button pressed");
-  }
+  const handleLogin = () => {
+    toast.show("hiiiiii");
+  };
 
   return (
     <View style={loginStyle.container}>
@@ -47,9 +50,9 @@ function HgaLogin() {
 
           <HgaButton
             fill={true}
+            onPress={handleLogin}
             name="Login"
             color={HgaGlobalColors.Orange}
-            onPress={handleLogin}
           />
         </View>
         <View style={loginStyle.Links}>
@@ -61,7 +64,6 @@ function HgaLogin() {
         <Text style={loginStyle.slogn}>
           "HostelHub: Your Gateway to Hassle-Free Stays!"
         </Text>
-        
       </View>
     </View>
   );
@@ -87,6 +89,7 @@ const loginStyle = StyleSheet.create({
     marginBottom: 10,
     padding: 10,
     marginVertical: 10,
+    backgroundColor: HgaGlobalColors.White,
   },
   button: {
     backgroundColor: "blue",

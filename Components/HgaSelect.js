@@ -32,6 +32,13 @@ function HgaSelect() {
     setSelect(inputText);
   }
 
+  function showList() {
+    setVisible(true);
+  }
+
+  function onCancel() {
+    setVisible(false);
+  }
   function renderItem({ item }) {
     return (
       <Pressable onPress={onOptionPressed.bind(this, item)}>
@@ -44,25 +51,42 @@ function HgaSelect() {
 
   return (
     <View>
-      <TextInput
-        caretHidden={true}
-        style={HgaSelectStyle.input}
-        keyboardAppearance="false"
-        onFocus={() => setVisible(true)}
-        value={selectValue}
-      ></TextInput>
-      <Modal animationType="fade" transparent={true} visible={isModelVisible}>
-        <View style={HgaSelectStyle.mainModal}>
-          <View style={HgaSelectStyle.innerContinderModal}>
-            <TextInput placeholder="Search" />
-            <FlatList
-              data={dummy}
-              renderItem={renderItem}
-              keyExtractor={(item, index) => item[index]}
-            />
-          </View>
+      <View>
+        <View style={HgaSelectStyle.inputLable}>
+          <TextInput
+            caretHidden={true}
+            style={HgaSelectStyle.input}
+            keyboardAppearance="false"
+            onFocus={showList}
+            value={selectValue}
+          ></TextInput>
+          <Pressable onPress={showList} style={HgaSelectStyle.arrowStyle}>
+            <Ionicons name="arrow-down-circle" size={30} />
+          </Pressable>
         </View>
-      </Modal>
+
+        <Modal animationType="fade" transparent={true} visible={isModelVisible}>
+          <View style={HgaSelectStyle.main}>
+            <View style={HgaSelectStyle.innerContinderModal}>
+              <View style={HgaSelectStyle.cross}>
+                <Text style={{ fontWeight: "bold" }}>Select</Text>
+                <Pressable onPress={onCancel}>
+                  <Ionicons name="close-circle-outline" size={25} />
+                </Pressable>
+              </View>
+              <TextInput
+                style={HgaSelectStyle.itemsSearch}
+                placeholder="Search"
+              />
+              <FlatList
+                data={dummy}
+                renderItem={renderItem}
+                keyExtractor={(item, index) => item + index}
+              />
+            </View>
+          </View>
+        </Modal>
+      </View>
     </View>
   );
 }
@@ -73,14 +97,10 @@ const HgaSelectStyle = StyleSheet.create({
   input: {
     width: "100%",
     height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
-    borderRadius: 10,
-    marginBottom: 10,
-    padding: 10,
-    marginVertical: 10,
+    paddingLeft: 10,
+    fontWeight: "bold",
   },
-  mainModal: {
+  main: {
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
@@ -89,16 +109,36 @@ const HgaSelectStyle = StyleSheet.create({
   innerContinderModal: {
     padding: 10,
     width: 300,
-    height: 200,
+    height: 300,
     backgroundColor: "white",
     borderRadius: 20,
-    backgroundColor: HgaGlobalColors.mainBg,
+    borderWidth: 1,
+    borderColor: "grey",
   },
   items: {
-    backgroundColor: HgaGlobalColors.mainBGDarK,
+    padding: 5,
+  },
+  itemsSearch: {
+    backgroundColor: HgaGlobalColors.White,
     borderBottomColor: HgaGlobalColors.Black,
     borderWidth: 1,
     padding: 5,
     borderRadius: 2,
+  },
+  arrowStyle: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: 40,
+  },
+  inputLable: {
+    borderColor: "gray",
+    backgroundColor: HgaGlobalColors.White,
+    borderWidth: 1,
+    borderRadius: 10,
+    flexDirection: "row",
+  },
+  cross: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });
