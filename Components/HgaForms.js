@@ -1,7 +1,8 @@
-import { Text, View, StyleSheet, TextInput, CheckBox } from "react-native";
+import { Text, View, StyleSheet, TextInput } from "react-native";
 import { useState } from "react";
 import HgaRadioButton from "./HgaRadioButton";
 import { Checkbox } from "react-native-paper";
+import { HgaGlobalColors } from "../Util/HgaGlobalColors";
 import HgaSelect from "./HgaSelect";
 function HgaForms() {
   const [inputText, setInputText] = useState("");
@@ -10,6 +11,30 @@ function HgaForms() {
     <View style={HgaFormsStyle.main}>
       <TextInput
         placeholder="inputText"
+        onChangeText={(text) => setInputText(text)}
+        value={inputText}
+        style={HgaFormsStyle.input}
+      />
+
+      <TextInput
+        inputMode="numeric"
+        placeholder="MobilePhone"
+        onChangeText={(text) => setInputText(text)}
+        value={inputText}
+        style={HgaFormsStyle.input}
+      />
+
+      <TextInput
+        inputMode="email"
+        placeholder="MobilePhone"
+        onChangeText={(text) => setInputText(text)}
+        value={inputText}
+        style={HgaFormsStyle.input}
+      />
+
+      <TextInput
+        placeholder="Password"
+        secureTextEntry
         onChangeText={(text) => setInputText(text)}
         value={inputText}
         style={HgaFormsStyle.input}
@@ -48,6 +73,7 @@ const HgaFormsStyle = StyleSheet.create({
     marginBottom: 10,
     padding: 10,
     marginVertical: 10,
+    backgroundColor: HgaGlobalColors.White,
   },
   checkboxContainer: {
     flexDirection: "row",
