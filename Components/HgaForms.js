@@ -1,91 +1,143 @@
-import { Text, View, StyleSheet, TextInput, Switch } from "react-native";
+import { Text, View, StyleSheet, Switch, Button } from "react-native";
 import { useState } from "react";
 import HgaRadioButton from "./HgaRadioButton";
-import { Checkbox } from "react-native-paper";
-import { HgaGlobalColors } from "../Util/HgaGlobalColors";
 import HgaSelect from "./HgaSelect";
-import HgaLink from "./HgaLinks";
-function HgaForms({ formList }) {
-  const [inputText, setInputText] = useState("");
-  const [isSelected, setSelection] = useState(false);
-  const [values, setValue] = useState("");
+import HgaButton from "./HgaButton";
+import HgaInput from "./HgaInput";
+import HgaToggle from "./HgaToggle";
+import HgaCheckBox from "./HgaCheckBox";
+import { HgaGlobalColors } from "../Util/HgaGlobalColors";
+function HgaForms({
+  formList,
+  cancelLabel,
+  submitLabel,
+  onPressCancel,
+  onPressSubmit,
+  previousValues,
+}) {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  let inputData = {};
 
-  const FormsList = ({ values }) => {
-    switch (values) {
+  function onFormSubmit(enterText) {
+    inputData = { ...enterText };
+  }
+
+  function submitHandler() {
+    const data = Object.keys(inputData) != 0 ? inputData : previousValues;
+    console.log(data);
+    onPressSubmit(data);
+  }
+
+  const FormsList = ({ data, onFormSubmit }) => {
+    const [inputText, setInputText] = useState(previousValues);
+    const [isSelected, setSelection] = useState(false);
+
+    function selectChecbox() {
+      setSelection(!isSelected);
+      inputValuesHandler(data.name, !isSelected);
+    }
+
+    function inputValuesHandler(identifier, enterText) {
+      console.log(identifier, enterText);
+      setInputText((currentValue) => {
+        return {
+          ...currentValue,
+          [identifier]: enterText,
+        };
+      });
+      for (let keys in previousValues) {
+        if (keys === identifier) {
+          previousValues[keys] = enterText;
+        }
+      }
+      onFormSubmit(inputText);
+    }
+
+    switch (data.type) {
       case "text":
         return (
-          <TextInput
-            placeholder="inputText"
-            onChangeText={(text) => setInputText(text)}
-            value={inputText}
-            style={HgaFormsStyle.input}
+          <HgaInput
+            placeholder={data.content}
+            onChangeText={inputValuesHandler.bind(this, data.name)}
+            value={inputText[data.name]}
+            keyboardAppearance="dark"
           />
         );
       case "password":
         return (
-          <TextInput
-            placeholder="Password"
+          <HgaInput
+            keyboardAppearance="dark"
+            placeholder={data.content}
             secureTextEntry
-            onChangeText={(text) => setInputText(text)}
-            value={inputText}
-            style={HgaFormsStyle.input}
+            onChangeText={inputValuesHandler.bind(this, data.name)}
+            value={inputText[data.name]}
+          />
+        );
+      case "confirmPassword":
+        return (
+          <HgaInput
+            keyboardAppearance="dark"
+            placeholder={data.content}
+            secureTextEntry
+            onChangeText={inputValuesHandler.bind(this, data.name)}
+            value={inputText[data.name]}
           />
         );
       case "phone":
         return (
-          <TextInput
+          <HgaInput
+            keyboardAppearance="dark"
+            autoComplete="tel"
             inputMode="numeric"
-            placeholder="MobilePhone"
-            onChangeText={(text) => setInputText(text)}
-            value={inputText}
-            style={HgaFormsStyle.input}
+            placeholder={data.content}
+            onChangeText={inputValuesHandler.bind(this, data.name)}
+            value={inputText[data.name]}
           />
         );
       case "email":
         return (
-          <TextInput
+          <HgaInput
+            keyboardAppearance="dark"
             inputMode="email"
-            placeholder="MobilePhone"
-            onChangeText={(text) => setInputText(text)}
-            value={inputText}
-            style={HgaFormsStyle.input}
-          />
-        );
-      case "Password":
-        return (
-          <TextInput
-            placeholder="Password"
-            secureTextEntry
-            onChangeText={(text) => setInputText(text)}
-            value={inputText}
-            style={HgaFormsStyle.input}
+            placeholder={data.content}
+            onChangeText={inputValuesHandler.bind(this, data.name)}
+            value={inputText[data.name]}
           />
         );
       case "checkbox":
         return (
-          <View style={HgaFormsStyle.checkboxContainer}>
-            <Checkbox
-              status={isSelected ? "checked" : "unchecked"}
-              onPress={() => {
-                setSelection(!isSelected);
-              }}
-            />
-            <Text style={HgaFormsStyle.label}>Remember me</Text>
-          </View>
+          <HgaCheckBox
+            label={data.content}
+            checkStatus={isSelected ? "checked" : "unchecked"}
+            onPress={selectChecbox}
+          />
         );
       case "select":
-        return <HgaSelect />;
+        return (
+          <HgaSelect
+            data={data.params}
+            value={inputValuesHandler.bind(this, data.name)}
+          />
+        );
       case "toggle":
         return (
-          <Switch
-            trackColor={{ false: "#767577", true: "#81b0ff" }}
-            thumbColor="purple"
+          <HgaToggle
+            label="isOk"
+            trackColor={{
+              false: HgaGlobalColors.Orange,
+              true: HgaGlobalColors.Orange,
+            }}
+            thumbColor={
+              isEnabled ? HgaGlobalColors.Orange : HgaGlobalColors.Orange
+            }
+            ios_backgroundColor="orange"
+            onValueChange={toggleSwitch}
+            value={isEnabled}
           />
         );
       case "radio":
         return <HgaRadioButton />;
-      case "link":
-        return <HgaLink />;
       default:
         return (
           <View>
@@ -94,11 +146,27 @@ function HgaForms({ formList }) {
         );
     }
   };
+
+  const ActionButtons = () => {
+    return (
+      <View style={HgaFormsStyle.buttons}>
+        <Button name={submitLabel} onPress={submitHandler} />
+        <Button name={cancelLabel} onPress={onPressCancel} />
+      </View>
+    );
+  };
+
   return (
     <View style={HgaFormsStyle.main}>
-      {formList.map((it, index) => (
-        <FormsList values={it} key={index} />
+      {formList.map((data, index) => (
+        <FormsList
+          data={data}
+          key={index}
+          initialvalues={previousValues}
+          onFormSubmit={onFormSubmit}
+        />
       ))}
+      <ActionButtons />
     </View>
   );
 }
@@ -112,26 +180,10 @@ const HgaFormsStyle = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-evenly",
   },
-  input: {
-    borderColor: "gray",
-    borderWidth: 1,
-    borderRadius: 10,
-    marginBottom: 10,
-    padding: 10,
-    marginVertical: 10,
-    backgroundColor: HgaGlobalColors.White,
-  },
-  checkboxContainer: {
-    flexDirection: "row",
-    marginBottom: 15,
-  },
-  checkbox: {
-    height: "60%",
-    width: "7%",
-    alignSelf: "center",
-  },
-  label: {
-    fontSize: 18,
-    margin: 4,
+
+  buttons: {
+    paddingTop: 10,
+    flexDirection: "column",
+    justifyContent: "space-evenly",
   },
 });

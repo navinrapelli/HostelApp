@@ -5,10 +5,15 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
+import { HgaGlobalColors } from "../Util/HgaGlobalColors";
 
 function HgaButton({ color, name, onPress, fill }) {
   const buttonStyleee = [ButtonStyle.main];
-  fill ? buttonStyleee.push({ backgroundColor: color }) : "";
+  fill
+    ? buttonStyleee.push({
+        backgroundColor: color ? color : HgaGlobalColors.Orange,
+      })
+    : "";
   return (
     <Pressable onPress={onPress}>
       <View style={buttonStyleee}>
@@ -24,17 +29,17 @@ const ButtonStyle = StyleSheet.create({
   main: {
     flexDirection: "row",
     padding: 10,
-    margin: 2,
+    marginVertical: 10,
     borderWidth: 2,
     borderRadius: 10,
-    borderColor: "white",
+    borderColor: "orange",
     alignItems: "center",
     justifyContent: "center",
   },
   text: {
     margin: 2,
     fontWeight: "bold",
-    color: "white",
+    color: "black",
   },
   button2: {
     borderWidth: 2,
