@@ -12,24 +12,14 @@ import { useState } from "react";
 import { keyboardProps } from "react-native-web/dist/cjs/modules/forwardedProps";
 import { HgaGlobalColors } from "../Util/HgaGlobalColors";
 
-function HgaSelect() {
-  const dummy = [
-    "Solapur",
-    "Satara",
-    "samgli",
-    "Pune",
-    "Mumbai",
-    "Bid",
-    "kholpaur",
-    "tuljapur",
-    "kokan",
-  ];
+function HgaSelect({ data, value }) {
   const [selectValue, setSelect] = useState("Select");
   const [isModelVisible, setVisible] = useState(false);
 
   function onOptionPressed(inputText) {
     setVisible(false);
     setSelect(inputText);
+    value(inputText);
   }
 
   function showList() {
@@ -79,7 +69,7 @@ function HgaSelect() {
                 placeholder="Search"
               />
               <FlatList
-                data={dummy}
+                data={data}
                 renderItem={renderItem}
                 keyExtractor={(item, index) => item + index}
               />

@@ -36,7 +36,7 @@ export default function App() {
               component={HgaTwoStepAuth}
             />
             <Stack.Screen name="ForgotPassword" component={HgaForgotPass} />
-            <Stack.Screen options={{}} name="Register" children={HgaRegister} />
+            <Stack.Screen name="Register" children={HgaRegister} />
           </Stack.Navigator>
         </NavigationContainer>
       </ToastProvider>

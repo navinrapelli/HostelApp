@@ -6,13 +6,13 @@ import HgaButton from "../Components/HgaButton";
 import HgaLink from "../Components/HgaLinks";
 import { LoginText } from "../Util/HgaContentEn";
 import { Checkbox } from "react-native-paper";
-import { useEffect } from "react";
-import HgaSelect from "../Components/HgaSelect";
 import { useToast } from "react-native-toast-notifications";
+import HgaInput from "../Components/HgaInput";
 function HgaLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isSelected, setSelection] = useState(false);
+
   const toast = useToast();
 
   const handleLogin = () => {
@@ -24,15 +24,15 @@ function HgaLogin() {
       <HgaLogo />
       <View style={loginStyle.box}>
         <View style={loginStyle.inputs}>
-          <TextInput
-            style={loginStyle.input}
+          <HgaInput
+            keyboardAppearance="dark"
             placeholder={LoginText.Username}
             onChangeText={(text) => setUsername(text)}
             value={username}
           />
 
-          <TextInput
-            style={loginStyle.input}
+          <HgaInput
+            keyboardAppearance="dark"
             placeholder="Password"
             secureTextEntry
             onChangeText={(text) => setPassword(text)}
@@ -48,12 +48,7 @@ function HgaLogin() {
             <Text style={loginStyle.label}>Remember Me</Text>
           </View>
 
-          <HgaButton
-            fill={true}
-            onPress={handleLogin}
-            name="Login"
-            color={HgaGlobalColors.Orange}
-          />
+          <HgaButton fill={true} onPress={handleLogin} name="Login" />
         </View>
         <View style={loginStyle.Links}>
           <HgaLink screen="ForgotPassword">ForgotPassword ?</HgaLink>
@@ -65,6 +60,10 @@ function HgaLogin() {
           "HostelHub: Your Gateway to Hassle-Free Stays!"
         </Text>
       </View>
+      {/* <View>
+        <Button title="Show Date Picker" onPress={showDatePicker} />
+        <DateTimePickerModal isVisible={isDatePickerVisible} mode="date" />
+      </View> */}
     </View>
   );
 }
@@ -79,17 +78,6 @@ const loginStyle = StyleSheet.create({
   title: {
     fontSize: 24,
     marginBottom: 20,
-  },
-  input: {
-    width: "100%",
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
-    borderRadius: 10,
-    marginBottom: 10,
-    padding: 10,
-    marginVertical: 10,
-    backgroundColor: HgaGlobalColors.White,
   },
   button: {
     backgroundColor: "blue",
@@ -107,13 +95,13 @@ const loginStyle = StyleSheet.create({
   },
   box: {
     paddingTop: 20,
-    shadowOffset: { width: 10, height: 10 },
-    shadowOpacity: 1,
-    shadowColor: "grey",
-    shadowRadius: 10,
+    shadowOffset: { width: 20, height: 10 },
+    shadowOpacity: 10,
+    shadowColor: "black",
+    shadowRadius: 30,
     borderColor: HgaGlobalColors.mainBGDarK,
     borderRadius: 20,
-    borderWidth: 1,
+    borderWidth: 2,
     width: 350,
     height: 350,
   },
