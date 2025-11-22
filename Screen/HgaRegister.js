@@ -27,6 +27,7 @@ function HgaRegister() {
 
         <HgaInput
           placeholder={"Enter Last Name"}
+          placeholder={"Last Name"}
           onChangeText={inputValuesHandler.bind(this, "lastName")}
           value={inputText.lastName}
           keyboardAppearance="dark"
