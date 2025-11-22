@@ -25,7 +25,7 @@ function HgaRegister() {
           keyboardAppearance="dark"
         />
 
-        {/* <HgaInput
+        <HgaInput
           placeholder={"Last Name"}
           onChangeText={inputValuesHandler.bind(this, "lastName")}
           value={inputText.lastName}
@@ -45,7 +45,7 @@ function HgaRegister() {
           placeholder={"Phone"}
           onChangeText={inputValuesHandler.bind(this, "mobilePhone")}
           value={inputText.mobilePhone}
-        /> */}
+        />
       </View>
     </HgaPage>
   );
